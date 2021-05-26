@@ -45,15 +45,6 @@ type Handler interface {
 	//   Handle(*ModuleContext, T<QueryRequest>) (T<QueryResponse>, error)
 }
 
-// Request represents a new request related to a Type.
-type Request struct {
-	Payload interface{}
-}
-
-func (r *Request) Context() *ModuleContext {
-	return &ModuleContext{}
-}
-
 type Keeper struct {
 }
 
@@ -78,7 +69,7 @@ const (
 	AddAccountCommand
 )
 
-// EnableCommand enables a top level command.
+// EnableCommand enables a top level framework command.
 func EnableCommand(Command) {
 }
 

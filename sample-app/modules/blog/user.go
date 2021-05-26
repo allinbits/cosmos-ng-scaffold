@@ -7,6 +7,9 @@ import (
 
 func init() {
 	framework.RegisterMessage(new(CreatePost), new(CreatePostHandler)) // associated with the Blog module with reflection by pkg name.
+}
+
+func init() {
 	framework.RegisterQuery(new(GetPostRequest), new(GetPostResponse), new(GetPostHandler))
 }
 

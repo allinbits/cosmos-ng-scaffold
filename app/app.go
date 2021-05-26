@@ -1,25 +1,24 @@
 package app
 
 import (
-	"github.com/allinbits/cosmos-ng-scaffold/x/blog"
 	"github.com/fdymylja/tmos/runtime"
-	"github.com/fdymylja/tmos/x/authn"
-	"github.com/fdymylja/tmos/x/bank"
+	"github.com/fdymylja/tmos/runtime/authentication"
+	"github.com/fdymylja/tmos/runtime/module"
 	abci "github.com/tendermint/tendermint/abci/types"
 )
 
-func New() abci.Application {
-	rtb := runtime.NewBuilder()
-	auth := authn.NewModule()
-	rtb.AddModule(auth)
-	// NOTE(dshulyak) GetTxDecoded needs a reference to runtime/module.Client, but apart from that
-	// it doesn't need to be a part of the module.
-	rtb.SetDecoder(auth.GetTxDecoder())
-	rtb.AddModule(bank.NewModule())
+var app = runtime.NewBuilder()
 
-	// NOTE(dshulyak) just an observation that NewModule is redundant in all of the current examples.
-	rtb.AddModule(&blog.Module{})
-	rt, err := rtb.Build()
+func RegisterModule(mod module.Module) {
+	app.AddModule(mod)
+}
+
+func SetDecoder(dec authentication.TxDecoder) {
+	app.SetDecoder(dec)
+}
+
+func Build() abci.Application {
+	rt, err := app.Build()
 	if err != nil {
 		panic(err)
 	}

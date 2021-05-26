@@ -7,6 +7,12 @@ import (
 	"github.com/fdymylja/tmos/runtime/module"
 )
 
+func init() {
+	initializers = append(initializers, func(cl module.Client, builder *module.DescriptorBuilder) {
+		builder.WithGenesis(&genesis{client: &Client{Client: cl}})
+	})
+}
+
 var _ module.GenesisHandler = (*genesis)(nil)
 
 type genesis struct {

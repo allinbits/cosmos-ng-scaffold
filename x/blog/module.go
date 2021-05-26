@@ -7,9 +7,12 @@ import (
 
 type Client = client.Client
 
-type initializer func(client module.Client) func(*module.DescriptorBuilder)
+type initializer func(module.Client, *module.DescriptorBuilder)
 
-var generatedInitializers []initializer
+var (
+	mod          = &Module{}
+	initializers []initializer
+)
 
 var _ module.Module = (*Module)(nil)
 
@@ -17,11 +20,9 @@ type Module struct{}
 
 func (m *Module) Initialize(cl module.Client) module.Descriptor {
 	builder := module.NewDescriptorBuilder().
-		Named("blog").
-		WithGenesis(&genesis{client: &Client{Client: cl}})
-
-	for _, gen := range generatedInitializers {
-		gen(cl)(builder)
+		Named("blog")
+	for _, gen := range initializers {
+		gen(cl, builder)
 	}
 	return builder.Build()
 }

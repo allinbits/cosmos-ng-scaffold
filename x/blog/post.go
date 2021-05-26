@@ -9,9 +9,7 @@ import (
 type Post = pb.Post
 
 func init() {
-	generatedInitializers = append(generatedInitializers, func(client module.Client) func(*module.DescriptorBuilder) {
-		return func(builder *module.DescriptorBuilder) {
-			builder.OwnsStateObject(&pb.Post{}, orm.RegisterOptions{PrimaryKey: "id"})
-		}
+	initializers = append(initializers, func(client module.Client, builder *module.DescriptorBuilder) {
+		builder.OwnsStateObject(&pb.Post{}, orm.RegisterOptions{PrimaryKey: "id"})
 	})
 }

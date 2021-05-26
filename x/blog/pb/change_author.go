@@ -1,3 +1,3 @@
 package pb
 
-func (*ChangeAuthor) StateTransition()
+func (*ChangeAuthor) StateTransition() {}

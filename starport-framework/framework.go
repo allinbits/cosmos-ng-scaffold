@@ -22,8 +22,11 @@ type ModuleContext struct {
 // Genesis represents the genesis.
 type Genesis struct{}
 
-// Message defines message interface
-type Message interface {
+// Message defines a framework message.
+type Message interface{}
+
+// MessageHandler defines message handler interface.
+type MessageHandler interface {
 	// Context provides module's context to the type for advanced configuration.
 	Context(*ModuleContext)
 
@@ -39,8 +42,7 @@ type Request struct {
 	Payload interface{}
 }
 
-func (r *Request) Decode(out interface{}) error {
-	return nil
+func (r *Request) MustDecode(out interface{}) {
 }
 
 func (r *Request) Context() *ModuleContext {
@@ -56,7 +58,7 @@ func (k *Keeper) Save(key string, val interface{}) error { return nil }
 func RegisterModule(Module) {}
 
 // RegisterMessage registers a messages.
-func RegisterMessage(Message) {}
+func RegisterMessage(Message, MessageHandler) {}
 
 type Command int
 

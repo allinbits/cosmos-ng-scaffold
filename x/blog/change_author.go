@@ -9,7 +9,7 @@ import (
 func init() {
 	generatedInitializers = append(generatedInitializers, func(client module.Client) func(*module.DescriptorBuilder) {
 		return func(builder *module.DescriptorBuilder) {
-			builder.HandlesStateTransition(&pb.ChangeAuthor{}, &CreatePost{client: &Client{Client: client}}, true)
+			builder.HandlesStateTransition(&pb.ChangeAuthor{}, &ChangeAuthor{client: &Client{Client: client}}, true)
 		}
 	})
 }

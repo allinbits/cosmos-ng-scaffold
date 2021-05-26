@@ -31,12 +31,12 @@ type Message interface {
 	Command() *cobra.Command
 
 	// Handle handles an incoming request.
-	Handle(Request) error
+	Handle(*ModuleContext, Request) error
 }
 
 // Request represents a new request related to a Type.
 type Request struct {
-	MessageContent []byte
+	Payload interface{}
 }
 
 func (r *Request) Decode(out interface{}) error {

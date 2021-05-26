@@ -21,13 +21,10 @@ func (p *CreatePost) Context(c *framework.ModuleContext) {
 }
 
 // Handle handles a new request for type.
-func (p *CreatePost) Handle(f framework.Request) error {
-	var m CreatePost
-	if err := f.Decode(&m); err != nil {
-		return err
-	}
+func (p *CreatePost) Handle(c *framework.ModuleContext, r framework.Request) error {
+	m := r.Payload.(*CreatePost)
 
-	return f.Context().Keeper.Save(m.Name, m)
+	return c.Keeper.Save(m.Name, m)
 }
 
 // Command optionally add a command for this type.

@@ -13,11 +13,20 @@ type Module interface {
 	AddCommands(root *cobra.Command)
 }
 
+// ModuleContext keeps mutable configuration for the module.
+type ModuleContext struct {
+	Command *cobra.Command
+}
+
 // Genesis represents the genesis.
 type Genesis struct{}
 
 // Message defines message interface
 type Message interface {
+	// Context provides module's context to the type.
+	Context(*ModuleContext)
+
+	// Handle handles an incoming request.
 	Handle(Request) error
 }
 

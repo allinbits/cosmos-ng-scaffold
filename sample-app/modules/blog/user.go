@@ -14,5 +14,10 @@ type CreatePost struct {
 
 // Handle handles a new request for type.
 func (p *CreatePost) Handle(f framework.Request) error {
-	return f.Keeper().Save(p.Name, p)
+	var m CreatePost
+	if err := f.Decode(&m); err != nil {
+		return err
+	}
+
+	return f.Keeper().Save(m.Name, m)
 }

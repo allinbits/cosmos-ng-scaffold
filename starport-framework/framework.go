@@ -23,6 +23,11 @@ type Message interface {
 
 // Request represents a new request related to a Type.
 type Request struct {
+	MessageContent []byte
+}
+
+func (r *Request) Decode(out interface{}) error {
+	return nil
 }
 
 func (r *Request) Keeper() *Keeper {

@@ -16,6 +16,7 @@ func New() abci.Application {
 	// it doesn't need to be a part of the module.
 	rtb.SetDecoder(auth.GetTxDecoder())
 	rtb.AddModule(bank.NewModule())
+
 	// NOTE(dshulyak) just an observation that NewModule is redundant in all of the current examples.
 	rtb.AddModule(&blog.Module{})
 	rt, err := rtb.Build()

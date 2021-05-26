@@ -25,8 +25,11 @@ type Genesis struct{}
 // Message defines a framework message.
 type Message interface{}
 
-// MessageHandler defines message handler interface.
-type MessageHandler interface {
+// Query defines a framework query.
+type Query interface{}
+
+// Handler defines handler interface.
+type Handler interface {
 	// Context provides module's context to the type for advanced configuration.
 	Context(*ModuleContext)
 
@@ -45,6 +48,10 @@ type Request struct {
 func (r *Request) MustDecode(out interface{}) {
 }
 
+func (r *Request) Respond(response interface{}) error {
+	return nil
+}
+
 func (r *Request) Context() *ModuleContext {
 	return &ModuleContext{}
 }
@@ -54,11 +61,16 @@ type Keeper struct {
 
 func (k *Keeper) Save(key string, val interface{}) error { return nil }
 
+func (k *Keeper) Get(key string, out interface{}) error { return nil }
+
 // RegisterModule registers a module.
 func RegisterModule(Module) {}
 
 // RegisterMessage registers a messages.
-func RegisterMessage(Message, MessageHandler) {}
+func RegisterMessage(Message, Handler) {}
+
+// RegisterQuery registers a query.
+func RegisterQuery(Query, Handler) {}
 
 type Command int
 

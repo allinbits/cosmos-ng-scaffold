@@ -7,16 +7,24 @@ import (
 
 func init() {
 	framework.RegisterMessage(new(CreatePost), new(CreatePostHandler)) // associated with the Blog module with reflection by pkg name.
+	framework.RegisterQuery(new(GetPost), new(GetPostHandler))
 }
 
-// CreatePost represents a create post request.
-type CreatePost struct {
+// Post is a blog post.
+type Post struct {
 	Name    string
 	Content string
 }
 
+// CreatePost represents a create post request.
+type CreatePost struct {
+	Post
+}
+
 // CreatePostHandler is a handler for CreatePost.
-type CreatePostHandler struct{}
+type CreatePostHandler struct {
+	framework.Handler
+}
 
 // Handle handles a new request for type.
 func (h *CreatePostHandler) Handle(c *framework.ModuleContext, r framework.Request) error {
@@ -37,3 +45,28 @@ func (h *CreatePostHandler) Command() *cobra.Command {
 // Context called on each message handler once to optionnaly do advanced configuration on the
 // module context.
 func (h *CreatePostHandler) Context(c *framework.ModuleContext) {}
+
+// GetPost represents a get post request payload.
+type GetPost struct {
+	Post
+}
+
+// GetPostHandler is a get post handler.
+type GetPostHandler struct {
+	framework.Handler
+}
+
+// Handle handles get post query.
+func (h *GetPostHandler) Handle(c *framework.ModuleContext, r framework.Request) error {
+	var m GetPost
+
+	r.MustDecode(&m)
+
+	var post Post
+
+	if err := c.Keeper.Get(m.Name, &post); err != nil {
+		return err
+	}
+
+	return r.Respond(post)
+}

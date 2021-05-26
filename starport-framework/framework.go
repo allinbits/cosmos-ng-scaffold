@@ -16,6 +16,7 @@ type Module interface {
 // ModuleContext keeps mutable configuration for the module.
 type ModuleContext struct {
 	Command *cobra.Command
+	Keeper  *Keeper
 }
 
 // Genesis represents the genesis.
@@ -23,8 +24,11 @@ type Genesis struct{}
 
 // Message defines message interface
 type Message interface {
-	// Context provides module's context to the type.
+	// Context provides module's context to the type for advanced configuration.
 	Context(*ModuleContext)
+
+	// Command optionally adds another command for the module for this message type.
+	Command() *cobra.Command
 
 	// Handle handles an incoming request.
 	Handle(Request) error
@@ -39,8 +43,8 @@ func (r *Request) Decode(out interface{}) error {
 	return nil
 }
 
-func (r *Request) Keeper() *Keeper {
-	return &Keeper{}
+func (r *Request) Context() *ModuleContext {
+	return &ModuleContext{}
 }
 
 type Keeper struct {

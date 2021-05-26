@@ -17,7 +17,7 @@ type CreatePost struct {
 
 // Context sets type related configuration to the module context.
 func (p *CreatePost) Context(c *framework.ModuleContext) {
-	c.Command.AddCommand(p.createPostCommand())
+	// do more customization for the type on module.
 }
 
 // Handle handles a new request for type.
@@ -27,10 +27,11 @@ func (p *CreatePost) Handle(f framework.Request) error {
 		return err
 	}
 
-	return f.Keeper().Save(m.Name, m)
+	return f.Context().Keeper.Save(m.Name, m)
 }
 
-func (p *CreatePost) createPostCommand() *cobra.Command {
+// Command optionally add a command for this type.
+func (p *CreatePost) Command() *cobra.Command {
 	return &cobra.Command{
 		Use: "create-post",
 	}

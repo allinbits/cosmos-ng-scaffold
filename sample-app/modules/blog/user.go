@@ -31,11 +31,7 @@ type CreatePostHandler struct {
 }
 
 // Handle handles a new request for type.
-func (h *CreatePostHandler) Handle(c *framework.ModuleContext, r framework.Request) error {
-	var m CreatePost
-
-	r.MustDecode(&m)
-
+func (h *CreatePostHandler) Handle(c *framework.ModuleContext, m CreatePost) error {
 	return c.Keeper.Save(m.Name, m)
 }
 
@@ -66,16 +62,12 @@ type GetPostHandler struct {
 }
 
 // Handle handles get post query.
-func (h *GetPostHandler) Handle(c *framework.ModuleContext, r framework.Request) error {
-	var m GetPostRequest
-
-	r.MustDecode(&m)
-
+func (h *GetPostHandler) Handle(c *framework.ModuleContext, r GetPostRequest) (GetPostResponse, error) {
 	var post Post
 
-	if err := c.Keeper.Get(m.ID, &post); err != nil {
-		return err
+	if err := c.Keeper.Get(r.ID, &post); err != nil {
+		return GetPostResponse{}, err
 	}
 
-	return r.Respond(GetPostResponse{Post: post})
+	return GetPostResponse{Post: post}, nil
 }

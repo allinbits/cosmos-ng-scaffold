@@ -39,20 +39,15 @@ type Handler interface {
 	// Command optionally adds another command for the module for this message type.
 	Command() *cobra.Command
 
-	// Handle handles an incoming request.
-	Handle(*ModuleContext, Request) error
+	// Handler must implement one of the Handle functions depending on if it is a message request or
+	// a query request, otherwise RegisterQuery or RegisterMessage will panic.
+	//   Handle(*ModuleContext, T<Message>) (error)
+	//   Handle(*ModuleContext, T<QueryRequest>) (T<QueryResponse>, error)
 }
 
 // Request represents a new request related to a Type.
 type Request struct {
 	Payload interface{}
-}
-
-func (r *Request) MustDecode(out interface{}) {
-}
-
-func (r *Request) Respond(response interface{}) error {
-	return nil
 }
 
 func (r *Request) Context() *ModuleContext {

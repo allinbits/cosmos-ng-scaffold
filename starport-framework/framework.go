@@ -22,11 +22,14 @@ type ModuleContext struct {
 // Genesis represents the genesis.
 type Genesis struct{}
 
-// Message defines a framework message.
+// Message defines message type.
 type Message interface{}
 
-// Query defines a framework query.
-type Query interface{}
+// QueryRequest defines query request type.
+type QueryRequest interface{}
+
+// QueryResponse defines response request type.
+type QueryResponse interface{}
 
 // Handler defines handler interface.
 type Handler interface {
@@ -70,7 +73,7 @@ func RegisterModule(Module) {}
 func RegisterMessage(Message, Handler) {}
 
 // RegisterQuery registers a query.
-func RegisterQuery(Query, Handler) {}
+func RegisterQuery(QueryRequest, QueryResponse, Handler) {}
 
 type Command int
 

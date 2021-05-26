@@ -13,4 +13,4 @@ framework:
         - add-account
 
     # enables code generation of main.go.
-    geneate_main_pkg: true
+    generate_main_pkg: true

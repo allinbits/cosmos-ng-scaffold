@@ -1,0 +1,10 @@
+syntax="proto3";
+
+package scaffold.x.blog;
+
+option go_package = "github.com/allinbits/cosmos-ng-scaffold/x/blog/pb";
+
+message CreatePost {
+  string id = 1;
+  string content = 2;
+}

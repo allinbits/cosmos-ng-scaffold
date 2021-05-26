@@ -1,0 +1,11 @@
+# modules defined here are added to the app by registering them with code generation
+# under the generated/ dir.
+register_modules:
+    - github.com/tendermint/starport-framework/starport-framework/modules/auth.Auth
+    - github.com/tendermint/starport-framework/starport-framework/modules/bank.Bank@v1.3
+    - modules/blog.Blog
+
+enable_default_commands:
+    - start
+    - init
+    - add-account

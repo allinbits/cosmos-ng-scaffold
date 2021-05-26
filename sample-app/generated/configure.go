@@ -11,9 +11,9 @@ import (
 )
 
 func init() {
-	framework.RegisterModule(&auth.Auth{})
-	framework.RegisterModule(&bank.Bank{})
-	framework.RegisterModule(&blog.Blog{})
+	framework.RegisterModule(new(auth.Auth))
+	framework.RegisterModule(new(bank.Bank))
+	framework.RegisterModule(new(blog.Blog))
 	framework.EnableCommand(framework.StartCommand)
 	framework.EnableCommand(framework.InitCommand)
 	framework.EnableCommand(framework.AddAccountCommand)
